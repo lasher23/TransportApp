@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import tech.bison.transport.Connection;
@@ -22,25 +26,42 @@ public class SearchConnectionController {
   @FXML
   private TextField txtDestination;
   @FXML
-  private TableView<Connection> tableView = new TableView<>();
+  private TableView<Connection> tableView;
+  @FXML
+  private TableColumn<Connection, String> columnBus;
+  @FXML
+  private TableColumn<Connection, String> columnDestination;
+  @FXML
+  private TableColumn<Connection, String> columnDepartureTime;
+  @FXML
+  private TableColumn<Connection, String> columnArrivalTime;
   private Transport transport = new Transport();
+  private ObservableList<Connection> connections = FXCollections.observableArrayList();
 
   @FXML
   private void initialize() {
     setAutocompleteToTextField(txtStart);
     setAutocompleteToTextField(txtDestination);
+    tableView.setItems(connections);
+
+    columnBus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFrom().getPlatform()));
   }
 
   @FXML
   private void onSearchClick() {
     try {
-      List<Connection> connections = transport.getConnections(txtStart.getText(), txtDestination.getText())
-          .getConnections();
-
+      this.connections.addAll(transport.getConnections(txtStart.getText(), txtDestination.getText()).getConnections());
+      System.out.println("hep");
+      for (Connection connection : connections) {
+        System.out.println(connection.getDuration());
+      }
+      tableView.refresh();
     } catch (PublicTransportServiceUnvailableException e) {
+      e.printStackTrace();
       Alert alert = new Alert(AlertType.ERROR);
       alert.setHeaderText("Fehler bei der Verbindun zum Server!");
       alert.setContentText("Prüfen sie ihre Internetverbindung und versuchen sie es später nochmal.");
+      alert.show();
     }
   }
 

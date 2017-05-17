@@ -4,8 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -105,20 +104,32 @@
             </Button>
          </children>
       </VBox>
-      <VBox>
+      <HBox>
          <children>
-            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
-               </VBox.margin>
-               <columns>
-                  <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="125.0" text="Bus" />
-                  <TableColumn maxWidth="1.7976931348623157E308" prefWidth="125.0" text="Zielort" />
-                  <TableColumn maxWidth="1.7976931348623157E308" prefWidth="125.0" text="Abfahrtszeit" />
-                  <TableColumn maxWidth="1.7976931348623157E308" prefWidth="125.0" text="Ankunftszeit" />
-               </columns>
-            </TableView>
+            <GridPane HBox.hgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox>
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </VBox>
