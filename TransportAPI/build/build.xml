@@ -1,0 +1,21 @@
+<project basedir="./out" default="jar">
+	<property name="srcdir" value="${basedir}/../../src">
+	</property>
+	<target name="clean">
+		<delete dir="${basedir}">
+		</delete>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${basedir}/classes" />
+		<javac srcdir="${srcdir}" destdir="${basedir}/classes" includeantruntime="false">
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${basedir}/TransportAPI.jar" basedir="${basedir}/classes">
+			<zipgroupfileset dir=""/>
+		</jar>
+	</target>
+
+</project>
