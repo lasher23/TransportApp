@@ -19,10 +19,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import tech.bison.transport.Connection;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
+import tech.bison.transport.Section;
 import tech.bison.transport.Station;
 import tech.bison.transport.Transport;
 
 public class SearchConnectionController {
+
 	@FXML
 	private TextField txtStart;
 	@FXML
@@ -43,14 +45,24 @@ public class SearchConnectionController {
 
 	@FXML
 	private void initialize() {
-		columnBus
-				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFrom().getPlatform()));
+
+		columnBus.setCellValueFactory(cellData -> {
+			StringBuilder sb = new StringBuilder();
+			for (Section section : cellData.getValue().getSections()) {
+				try {
+					sb.append(section.getJourney().getName() + "\n");
+				} catch (NullPointerException e) {
+					// somtimes the api returns null
+				}
+			}
+			return new SimpleStringProperty(sb.toString().substring(0, sb.length() - 2));
+		});
 		columnDestination.setCellValueFactory(
 				cellData -> new SimpleStringProperty(cellData.getValue().getTo().getStation().getName()));
 		columnDepartureTime.setCellValueFactory(cellData -> new SimpleStringProperty(
-				new Date(Long.parseLong(cellData.getValue().getFrom().getDepartureTimestamp()))));
-		columnDepartureTime.setCellValueFactory(
-				cellData -> new SimpleStringProperty(new Date(cellData.getValue().getFrom().getArrivalTimestamp())));
+				convertTimestampToStringFormat(Long.parseLong(cellData.getValue().getFrom().getDepartureTimestamp()))));
+		columnArrivalTime.setCellValueFactory(cellData -> new SimpleStringProperty(
+				convertTimestampToStringFormat(Long.parseLong(cellData.getValue().getTo().getArrivalTimestamp()))));
 		setAutocompleteToTextField(txtStart);
 		setAutocompleteToTextField(txtDestination);
 		tableView.setItems(connections);
@@ -59,13 +71,12 @@ public class SearchConnectionController {
 	@FXML
 	private void onSearchClick() {
 		try {
+			connections.clear();
 			connections.addAll(transport.getConnections(txtStart.getText(), txtDestination.getText()).getConnections());
 			tableView.refresh();
 			System.out.println(
 					dateFormat.format(new Date(Long.parseLong(connections.get(0).getFrom().getDepartureTimestamp()))));
-			System.out.println(connections.get(0).getTo().getArrivalTimestamp());
 		} catch (PublicTransportServiceUnvailableException e) {
-			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setHeaderText("Fehler bei der Verbindun zum Server!");
 			alert.setContentText("Prüfen sie ihre Internetverbindung und versuchen sie es später nochmal.");
@@ -103,7 +114,7 @@ public class SearchConnectionController {
 		});
 	}
 
-	private String getFormattedDate(long timestamp) {
-
+	private String convertTimestampToStringFormat(long timestamp) {
+		return dateFormat.format(new Date(timestamp));
 	}
 }
