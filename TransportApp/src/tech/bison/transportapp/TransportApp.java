@@ -9,33 +9,40 @@ import javafx.stage.Stage;
 import tech.bison.transportapp.view.RootLayoutController;
 
 public class TransportApp extends Application {
-  /**
-   * Start method is always called first, never can be null
-   */
-  private Stage primaryStage;
-  private RootLayoutController controller;
+	private RootLayoutController controller;
 
-  @Override
-  public void start(Stage primaryStage) {
-    this.primaryStage = primaryStage;
-    initRootLayout();
-    primaryStage.setScene(new Scene(controller.getRootPane()));
-    primaryStage.show();
+	/**
+	 * Entry Point to the Application
+	 * 
+	 * @param The
+	 *            {@link javafx.stage.Stage} for changing the GUI
+	 */
+	@Override
+	public void start(Stage primaryStage) {
+		initRootLayout();
+		primaryStage.setScene(new Scene(controller.getRootPane()));
+		primaryStage.show();
 
-  }
+	}
 
-  private void initRootLayout() {
-    try {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
-      loader.load();
-      controller = (RootLayoutController) loader.getController();
-    } catch (IOException e) {
-      // never happens, I ensure that correct Path is set
-    }
-  }
+	private void initRootLayout() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
+			loader.load();
+			controller = (RootLayoutController) loader.getController();
+		} catch (IOException e) {
+			// never happens, I ensure that correct Path is set
+		}
+	}
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+	/**
+	 * Application starts search Main Thread and create new Applicatoion
+	 * 
+	 * @param args
+	 *            possible console arguments
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
