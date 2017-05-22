@@ -12,63 +12,77 @@ import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 
 public class Transport {
-  public Stations getStations(String query) throws PublicTransportServiceUnvailableException {
-    try {
-      URL url = new URL(
-          "http://transport.opendata.ch/v1/locations?query=" + UrlEscapers.urlFormParameterEscaper().escape(query));
+	public Stations getStations(String query) throws PublicTransportServiceUnvailableException {
+		try {
+			URL url = new URL("http://transport.opendata.ch/v1/locations?query="
+					+ UrlEscapers.urlFormParameterEscaper().escape(query));
 
-      String output = getStringFromUrl(url);
+			String output = getStringFromUrl(url);
 
-      return new Gson().fromJson(output, Stations.class);
-    } catch (Exception e) {
-      throw new PublicTransportServiceUnvailableException(e);
-    }
-  }
+			return new Gson().fromJson(output, Stations.class);
+		} catch (Exception e) {
+			throw new PublicTransportServiceUnvailableException(e);
+		}
+	}
 
-  public StationBoardRoot getStationBoard(String station, String id) throws PublicTransportServiceUnvailableException {
-    try {
-      URL url = new URL("http://transport.opendata.ch/v1/stationboard?Station="
-          + UrlEscapers.urlFormParameterEscaper().escape(station) + "&id="
-          + UrlEscapers.urlFormParameterEscaper().escape(id));
-      String output = getStringFromUrl(url);
+	public Stations getStations(double pointX, double pointY) throws PublicTransportServiceUnvailableException {
+		try {
+			URL url = new URL("http://transport.opendata.ch/v1/locations?x="
+					+ UrlEscapers.urlFormParameterEscaper().escape(String.valueOf(pointX)) + "&y=" + pointY);
 
-      return new Gson().fromJson(output, StationBoardRoot.class);
-    } catch (Exception e) {
-      throw new PublicTransportServiceUnvailableException(e);
-    }
-  }
+			String output = getStringFromUrl(url);
 
-  public Connections getConnections(String fromStation, String toStation)
-      throws PublicTransportServiceUnvailableException {
-    return getConnections(fromStation, toStation, LocalDateTime.now());
-  }
+			return new Gson().fromJson(output, Stations.class);
+		} catch (Exception e) {
+			throw new PublicTransportServiceUnvailableException(e);
+		}
+	}
 
-  private String getStringFromUrl(URL url) throws IOException {
-    URLConnection connection = url.openConnection();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-    StringBuilder output = new StringBuilder();
-    String tempOutput;
-    while ((tempOutput = reader.readLine()) != null) {
-      output.append(tempOutput);
-    }
-    return output.toString();
-  }
+	public StationBoardRoot getStationBoard(String station, String id)
+			throws PublicTransportServiceUnvailableException {
+		try {
+			URL url = new URL("http://transport.opendata.ch/v1/stationboard?Station="
+					+ UrlEscapers.urlFormParameterEscaper().escape(station) + "&id="
+					+ UrlEscapers.urlFormParameterEscaper().escape(id));
+			String output = getStringFromUrl(url);
 
-  public Connections getConnections(String fromStation, String toStation, LocalDateTime dateTime)
-      throws PublicTransportServiceUnvailableException {
-    try {
-      DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
-      URL url = new URL("http://transport.opendata.ch/v1/connections?from="
-          + UrlEscapers.urlFormParameterEscaper().escape(fromStation) + "&to="
-          + UrlEscapers.urlFormParameterEscaper().escape(toStation) + "&date=" + dateTime.format(formatterDate)
-          + "&time=" + dateTime.format(formatterTime));
+			return new Gson().fromJson(output, StationBoardRoot.class);
+		} catch (Exception e) {
+			throw new PublicTransportServiceUnvailableException(e);
+		}
+	}
 
-      String output = getStringFromUrl(url);
-      return new Gson().fromJson(output, Connections.class);
-    } catch (Exception e) {
-      throw new PublicTransportServiceUnvailableException(e);
-    }
-  }
+	public Connections getConnections(String fromStation, String toStation)
+			throws PublicTransportServiceUnvailableException {
+		return getConnections(fromStation, toStation, LocalDateTime.now());
+	}
+
+	public Connections getConnections(String fromStation, String toStation, LocalDateTime dateTime)
+			throws PublicTransportServiceUnvailableException {
+		try {
+			DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+			URL url = new URL("http://transport.opendata.ch/v1/connections?from="
+					+ UrlEscapers.urlFormParameterEscaper().escape(fromStation) + "&to="
+					+ UrlEscapers.urlFormParameterEscaper().escape(toStation) + "&date="
+					+ dateTime.format(formatterDate) + "&time=" + dateTime.format(formatterTime));
+
+			String output = getStringFromUrl(url);
+			return new Gson().fromJson(output, Connections.class);
+		} catch (Exception e) {
+			throw new PublicTransportServiceUnvailableException(e);
+		}
+	}
+
+	private String getStringFromUrl(URL url) throws IOException {
+		URLConnection connection = url.openConnection();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		StringBuilder output = new StringBuilder();
+		String tempOutput;
+		while ((tempOutput = reader.readLine()) != null) {
+			output.append(tempOutput);
+		}
+		return output.toString();
+	}
 
 }
