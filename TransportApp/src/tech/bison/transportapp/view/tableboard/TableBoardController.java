@@ -2,11 +2,10 @@ package tech.bison.transportapp.view.tableboard;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,29 +40,13 @@ public class TableBoardController {
         cellData -> new SimpleStringProperty(dateFormat.format(cellData.getValue().getStop().getDate())));
     columnDestination.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTo()));
     table.setItems(stationBoardEntries);
-
-    txtStationName.textProperty().addListener(new ChangeListener<String>() {
-
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        // TODO Auto-generated method stub
-
-      }
-    });
   }
 
   @FXML
   private void onTxtStationNameKeyPressed() {
     try {
       List<Station> stations = transport.getStations(txtStationName.getText()).getStations();
-      stations.sort((o1, o2) -> {
-        if (o1.getScore() > o2.getScore()) {
-          return 1;
-        } else if (o1.getScore() < o2.getScore()) {
-          return -1;
-        }
-        return 0;
-      });
+      stations.sort(getComparator());
       txtStationName.getEntries().clear();
       for (Station station : stations) {
         txtStationName.getEntries().add(station.getName());
@@ -71,6 +54,17 @@ public class TableBoardController {
     } catch (PublicTransportServiceUnvailableException e) {
       // dont update Autocomplete on Server Error
     }
+  }
+
+  public Comparator<Station> getComparator() {
+    return (o1, o2) -> {
+      if (o1.getScore() > o2.getScore()) {
+        return 1;
+      } else if (o1.getScore() < o2.getScore()) {
+        return -1;
+      }
+      return 0;
+    };
   }
 
   @FXML
