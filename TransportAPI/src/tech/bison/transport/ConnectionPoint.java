@@ -1,10 +1,12 @@
 package tech.bison.transport;
 
+import java.util.Date;
+
 public class ConnectionPoint {
   private Station station;
-  private String arrival;
+  private Date arrival;
   private String arrivalTimestamp;
-  private String departure;
+  private Date departure;
   private String departureTimestamp;
   private int delay;
   private String platform;
@@ -14,7 +16,7 @@ public class ConnectionPoint {
     return station;
   }
 
-  public String getArrival() {
+  public Date getArrival() {
     return arrival;
   }
 
@@ -22,7 +24,7 @@ public class ConnectionPoint {
     return arrivalTimestamp;
   }
 
-  public String getDeparture() {
+  public Date getDeparture() {
     return departure;
   }
 

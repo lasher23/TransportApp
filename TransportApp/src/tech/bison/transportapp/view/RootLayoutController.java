@@ -27,6 +27,14 @@ public class RootLayoutController {
 
   @FXML
   private void onShowStationBoard() {
-
+    try {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(getClass().getResource("tableboard/TableBoard.fxml"));
+      VBox pane = (VBox) loader.load();
+      rootPane.setCenter(pane);
+      System.out.println("hep");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

@@ -26,4 +26,9 @@ public class Station {
   public double getDistance() {
     return distance;
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

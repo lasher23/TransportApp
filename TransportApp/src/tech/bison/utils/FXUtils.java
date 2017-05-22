@@ -1,90 +1,34 @@
 package tech.bison.utils;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 
 public class FXUtils {
-	public interface AutoCompleteComparator<T> {
-		boolean matches(String typedText, T objectToCompare);
-	}
+  private FXUtils() {
 
-	public static <T> void autoCompleteComboBoxPlus(ComboBox<T> comboBox, AutoCompleteComparator<T> comparatorMethod) {
-		ObservableList<T> data = comboBox.getItems();
+  }
 
-		comboBox.setEditable(true);
-		comboBox.getEditor().focusedProperty().addListener(observable -> {
-			if (comboBox.getSelectionModel().getSelectedIndex() < 0) {
-				comboBox.getEditor().setText(null);
-			}
-		});
-		comboBox.addEventHandler(KeyEvent.KEY_PRESSED, t -> comboBox.hide());
-		comboBox.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+  public static void onlyAllowNumbers(int lowerBound, int upperBound, TextField textfield) {
+    textfield.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (newValue.isEmpty()) {
+          return;
+        }
+        int val = Integer.parseInt(newValue);
+        if (val < lowerBound || val > upperBound) {
+          textfield.setText(oldValue);
+        }
+      } catch (NumberFormatException e) {
+        textfield.setText(oldValue);
+      }
+    });
+  }
 
-			private boolean moveCaretToPos = false;
-			private int caretPos;
-
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.UP) {
-					caretPos = -1;
-					moveCaret(comboBox.getEditor().getText().length());
-					return;
-				} else if (event.getCode() == KeyCode.DOWN) {
-					if (!comboBox.isShowing()) {
-						comboBox.show();
-					}
-					caretPos = -1;
-					moveCaret(comboBox.getEditor().getText().length());
-					return;
-				} else if (event.getCode() == KeyCode.BACK_SPACE) {
-					moveCaretToPos = true;
-					caretPos = comboBox.getEditor().getCaretPosition();
-				} else if (event.getCode() == KeyCode.DELETE) {
-					moveCaretToPos = true;
-					caretPos = comboBox.getEditor().getCaretPosition();
-				} else if (event.getCode() == KeyCode.ENTER) {
-					return;
-				}
-
-				if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
-						|| event.getCode().equals(KeyCode.SHIFT) || event.getCode().equals(KeyCode.CONTROL)
-						|| event.isControlDown() || event.getCode() == KeyCode.HOME || event.getCode() == KeyCode.END
-						|| event.getCode() == KeyCode.TAB) {
-					return;
-				}
-
-				ObservableList<T> list = FXCollections.observableArrayList();
-				for (T aData : data) {
-					if (aData != null && comboBox.getEditor().getText() != null
-							&& comparatorMethod.matches(comboBox.getEditor().getText(), aData)) {
-						list.add(aData);
-					}
-				}
-				String t = comboBox.getEditor().getText();
-
-				comboBox.setItems(list);
-				comboBox.getEditor().setText(t);
-				if (!moveCaretToPos) {
-					caretPos = -1;
-				}
-				moveCaret(t.length());
-				if (!list.isEmpty()) {
-					comboBox.show();
-				}
-			}
-
-			private void moveCaret(int textLength) {
-				if (caretPos == -1) {
-					comboBox.getEditor().positionCaret(textLength);
-				} else {
-					comboBox.getEditor().positionCaret(caretPos);
-				}
-				moveCaretToPos = false;
-			}
-		});
-	}
+  public static void showErrorAlert(String headerText, String contentText) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setHeaderText(headerText);
+    alert.setContentText(contentText);
+    alert.show();
+  }
 }
