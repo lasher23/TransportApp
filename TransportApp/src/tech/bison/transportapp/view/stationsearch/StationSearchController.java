@@ -1,10 +1,10 @@
 package tech.bison.transportapp.view.stationsearch;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
 import tech.bison.transport.Station;
@@ -27,10 +27,13 @@ public class StationSearchController {
       if (stations.size() > 1) {
         FXUtils.showErrorAlert("Zu viele Stationen!", "Geben sie eine einmalige Station ein");
       } else {
-
-        WebEngine engine = webView.getEngine();
-        engine.load("https://www.google.ch/maps?q=loc:" + stations.get(0).getCoordinate().getxCoordinate() + "+"
-            + stations.get(0).getCoordinate().getyCoordinate());
+        try {
+          new ProcessBuilder("x-www-browser",
+              "https://www.google.ch/maps?q=loc:" + stations.get(0).getCoordinate().getxCoordinate() + "+"
+                  + stations.get(0).getCoordinate().getyCoordinate()).start();
+        } catch (IOException e) {
+          // never happens
+        }
       }
     } catch (PublicTransportServiceUnvailableException e) {
       FXUtils.showErrorAlert("Keine Verbindung!", "Es konnte keine Verbindung mit dem Server hergestellt werden.");
