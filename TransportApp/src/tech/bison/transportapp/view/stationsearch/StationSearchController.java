@@ -6,6 +6,7 @@ import java.net.URLConnection;
 import java.util.Comparator;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,6 +52,7 @@ public class StationSearchController {
     columnName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
     columnDistance
         .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getDistance())));
+    Platform.runLater(txtStation::requestFocus);
   }
 
   @FXML

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,6 +80,8 @@ public class SearchConnectionController {
         cellData -> new SimpleStringProperty(getFromattedDate(cellData.getValue().getTo().getArrival())));
 
     tableView.setItems(connections);
+
+    Platform.runLater(txtStart::requestFocus);
   }
 
   @FXML
