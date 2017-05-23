@@ -1,2 +1,2 @@
 # Dokumentation
-Die Dokumentation befindet sich hier:[tsdt](Dokumentation.pdf)
+Die [Dokumentation](Dokumentation.pdf) ist als PDF file erstellt.
