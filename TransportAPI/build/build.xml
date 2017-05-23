@@ -1,0 +1,43 @@
+<project name="Transport API" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="jar">
+	<property name="out" value="./out">
+	</property>
+	<property name="projectName" value="TransportApi" />
+	<property name="src.dir" location="../src" />
+	<property name="dist.dir" location="${out}/dist" />
+	<property name="dist.lib.dir" location="${dist.dir}/lib" />
+	<property name="lib.dir" value="../lib" />
+
+	<target name="init">
+		<mkdir dir="${out}" />
+	</target>
+	<path id="classpath">
+		<fileset dir="${basedir}">
+			<include name="${lib.dir}/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="copy-dependencies">
+		<copy todir="${dist.lib.dir}">
+			<fileset dir="${lib.dir}" includes="**/*.jar" excludes="**/*sources.jar, **/*javadoc.jar" />
+		</copy>
+	</target>
+
+	<target name="compile" depends="init, copy-dependencies">
+
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${out}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.lib.dir}" />
+
+		<jar destfile="${projectName}.jar" basedir="${out}">
+			<zipgroupfileset dir="${lib.dir}"></zipgroupfileset>
+		</jar>
+	</target>
+</project>

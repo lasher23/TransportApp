@@ -71,9 +71,8 @@ public class SearchConnectionController {
       }
       return new SimpleStringProperty(sb.toString().substring(0, sb.length() - 2));
     });
-    columnDestination.setCellValueFactory(cellData -> {
-      return new SimpleStringProperty(cellData.getValue().getTo().getStation().getName());
-    });
+    columnDestination
+        .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTo().getStation().getName()));
     columnDepartureTime.setCellValueFactory(
         cellData -> new SimpleStringProperty(getFromattedDate(cellData.getValue().getFrom().getDeparture())));
     columnArrivalTime.setCellValueFactory(
@@ -98,7 +97,7 @@ public class SearchConnectionController {
       tableView.getItems().clear();
       this.connections.clear();
       this.connections.addAll(connections);
-      if (connections.size() == 0) {
+      if (connections.isEmpty()) {
         tableView.setPlaceholder(new Label("No results"));
       }
       tableView.refresh();
