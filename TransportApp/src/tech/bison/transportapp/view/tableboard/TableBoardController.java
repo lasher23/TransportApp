@@ -33,7 +33,7 @@ public class TableBoardController {
   @FXML
   private AutoCompleteTextField txtStationName;
   private Transport transport = new Transport();
-  private DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+  private DateFormat dateFormat = new SimpleDateFormat("HH:mm");
   private ObservableList<StationBoard> stationBoardEntries = FXCollections.observableArrayList();
 
   @FXML
