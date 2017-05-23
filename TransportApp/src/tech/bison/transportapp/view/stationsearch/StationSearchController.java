@@ -52,8 +52,8 @@ public class StationSearchController {
       }
     });
     columnName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
-    columnDistance
-        .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getDistance())));
+    columnDistance.setCellValueFactory(
+        param -> new SimpleStringProperty(String.valueOf(param.getValue().getDistance())));
     Platform.runLater(txtStation::requestFocus);
   }
 
@@ -69,13 +69,14 @@ public class StationSearchController {
       } else {
         double pointX = stations.get(0).getCoordinate().getxCoordinate();
         double pointY = stations.get(0).getCoordinate().getyCoordinate();
-        URL url = new URL(
-            BASE_URL + "?=center" + pointX + "," + pointY + "&size=" + HORIZONTAL_PIXELS + "x" + VERTICAL_PIXELS
-                + "&markers=" + pointX + "," + pointY + "&zoom=" + ZOOM_LEVEL + "&" + GOOGLE_MAPS_API_KEY);
+        URL url = new URL(BASE_URL + "?=center" + pointX + "," + pointY + "&size="
+            + HORIZONTAL_PIXELS + "x" + VERTICAL_PIXELS + "&markers=" + pointX + "," + pointY
+            + "&zoom=" + ZOOM_LEVEL + "&" + GOOGLE_MAPS_API_KEY);
         imgMap.setImage(getImageFromURL(url));
       }
     } catch (PublicTransportServiceUnvailableException | IOException e) {
-      FXUtils.showErrorAlert("Keine Verbindung!", "Es konnte keine Verbindung mit dem Server hergestellt werden.");
+      FXUtils.showErrorAlert("Keine Verbindung!",
+          "Es konnte keine Verbindung mit dem Server hergestellt werden.");
     }
   }
 
@@ -102,13 +103,15 @@ public class StationSearchController {
   private void onSearchNearBy() {
     try {
       panelResult.getChildren().clear();
-      Coordinate coordinate = transport.getStations(txtStation.getText()).getStations().get(0).getCoordinate();
-      ObservableList<Station> items = FXCollections.observableArrayList(
-          transport.getStations(coordinate.getxCoordinate(), coordinate.getyCoordinate()).getStations());
+      Coordinate coordinate = transport.getStations(txtStation.getText()).getStations().get(0)
+          .getCoordinate();
+      ObservableList<Station> items = FXCollections.observableArrayList(transport
+          .getStations(coordinate.getxCoordinate(), coordinate.getyCoordinate()).getStations());
       tableResults.setItems(items);
       panelResult.getChildren().add(tableResults);
     } catch (PublicTransportServiceUnvailableException e) {
-      FXUtils.showErrorAlert("Verbindung Fehlgeschlagen!", "Konnte nicht mit dem Server verbinden.");
+      FXUtils.showErrorAlert("Verbindung Fehlgeschlagen!",
+          "Konnte nicht mit dem Server verbinden.");
     }
   }
 

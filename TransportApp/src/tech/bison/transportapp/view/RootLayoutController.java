@@ -16,11 +16,15 @@ public class RootLayoutController {
   private BorderPane rootPane;
   private static final KeyCombination COMBO_CONNECTIONS = new KeyCodeCombination(KeyCode.F,
       KeyCombination.CONTROL_DOWN);
-  private static final KeyCombination COMBO_TABLE = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
-  private static final KeyCombination COMBO_SEARCH = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+  private static final KeyCombination COMBO_TABLE = new KeyCodeCombination(KeyCode.T,
+      KeyCombination.CONTROL_DOWN);
+  private static final KeyCombination COMBO_SEARCH = new KeyCodeCombination(KeyCode.S,
+      KeyCombination.CONTROL_DOWN);
 
   /**
-   * @return the Border Pane where the root layout is on it
+   * Gets the default {@link javafx.scene.layout.BorderPane}.
+   * 
+   * @return the Border Pane where the root layout is on it.
    */
   public BorderPane getRootPane() {
     return rootPane;

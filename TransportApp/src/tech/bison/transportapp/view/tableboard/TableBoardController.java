@@ -38,10 +38,12 @@ public class TableBoardController {
 
   @FXML
   private void initialize() {
-    columnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-    columnDeparture.setCellValueFactory(
-        cellData -> new SimpleStringProperty(dateFormat.format(cellData.getValue().getStop().getDate())));
-    columnDestination.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTo()));
+    columnName
+        .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+    columnDeparture.setCellValueFactory(cellData -> new SimpleStringProperty(
+        dateFormat.format(cellData.getValue().getStop().getDate())));
+    columnDestination
+        .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTo()));
     table.setItems(stationBoardEntries);
     Platform.runLater(txtStationName::requestFocus);
   }
@@ -77,7 +79,8 @@ public class TableBoardController {
     try {
       stations = transport.getStations(txtStationName.getText()).getStations();
       if (stations.isEmpty()) {
-        FXUtils.showErrorAlert("Station nicht vorhanden!", "Es wurde keine Station mit diesem Namen gefunden.");
+        FXUtils.showErrorAlert("Station nicht vorhanden!",
+            "Es wurde keine Station mit diesem Namen gefunden.");
       } else if (stations.size() > 1) {
         FXUtils.showErrorAlert("Zu viele Stationen",
             "Es wurde keine Eindeutige Station gefunden, geben sie einen eindeutigen Namen ein!");
@@ -91,7 +94,8 @@ public class TableBoardController {
   }
 
   private void printStationBoard(Station station) throws PublicTransportServiceUnvailableException {
-    List<StationBoard> stationBoards = transport.getStationBoard(station.getName(), station.getId()).getEntries();
+    List<StationBoard> stationBoards = transport.getStationBoard(station.getName(), station.getId())
+        .getEntries();
     if (stationBoards.isEmpty()) {
       FXUtils.showErrorAlert("Keine Station gefunden!", "");
     } else {

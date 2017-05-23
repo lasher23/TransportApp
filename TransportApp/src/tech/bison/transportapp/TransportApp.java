@@ -13,10 +13,10 @@ public class TransportApp extends Application {
   private RootLayoutController controller;
 
   /**
-   * Entry Point to the Application
+   * Entry Point to the Application.
    * 
-   * @param The
-   *          {@link javafx.stage.Stage} for changing the GUI
+   * @param primaryStage
+   *          The {@link javafx.stage.Stage} for changing the GUI
    */
   @Override
   public void start(Stage primaryStage) {
@@ -40,7 +40,7 @@ public class TransportApp extends Application {
   }
 
   /**
-   * Application starts search Main Thread and create new Applicatoion
+   * Application starts search Main Thread and create new Application.
    * 
    * @param args
    *          possible console arguments
