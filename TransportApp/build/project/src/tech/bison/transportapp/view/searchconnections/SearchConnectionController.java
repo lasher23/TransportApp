@@ -74,12 +74,12 @@ public class SearchConnectionController {
       }
       return new SimpleStringProperty(sb.toString().substring(0, sb.length() - 2));
     });
-    columnDestination
-        .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTo().getStation().getName()));
-    columnDepartureTime.setCellValueFactory(
-        cellData -> new SimpleStringProperty(getFromattedDate(cellData.getValue().getFrom().getDeparture())));
-    columnArrivalTime.setCellValueFactory(
-        cellData -> new SimpleStringProperty(getFromattedDate(cellData.getValue().getTo().getArrival())));
+    columnDestination.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().getTo().getStation().getName()));
+    columnDepartureTime.setCellValueFactory(cellData -> new SimpleStringProperty(
+        getFromattedDate(cellData.getValue().getFrom().getDeparture())));
+    columnArrivalTime.setCellValueFactory(cellData -> new SimpleStringProperty(
+        getFromattedDate(cellData.getValue().getTo().getArrival())));
 
     tableView.setItems(connections);
 
@@ -97,7 +97,8 @@ public class SearchConnectionController {
                 Integer.parseInt(txtMinutes.getText())))
             .getConnections();
       } else {
-        connections = transport.getConnections(txtStart.getText(), txtDestination.getText()).getConnections();
+        connections = transport.getConnections(txtStart.getText(), txtDestination.getText())
+            .getConnections();
       }
       tableView.getItems().clear();
       this.connections.clear();
@@ -109,7 +110,6 @@ public class SearchConnectionController {
     } catch (PublicTransportServiceUnvailableException e) {
       FXUtils.showErrorAlert("Fehler bei der Verbindun zum Server!",
           "Prüfen sie ihre Internetverbindung und versuchen sie es später nochmal.");
-      e.printStackTrace();
     }
   }
 

@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 
 public class FXUtils {
   /**
-   * nobody should instantiate this class, because it only has static methods
+   * nobody should instantiate this class, because it only has static methods.
    */
   private FXUtils() {
 
@@ -36,6 +36,14 @@ public class FXUtils {
     });
   }
 
+  /**
+   * Shows a default error alert.
+   * 
+   * @param headerText
+   *          the header text of the alert
+   * @param contentText
+   *          the content text of the alert
+   */
   public static void showErrorAlert(String headerText, String contentText) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setHeaderText(headerText);

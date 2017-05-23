@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="TransportApp.jar" size="29074" download="eager" />
+    <jar href="TransportApp.jar" size="29049" download="eager" />
     <jar href="libs\TransportApp.jar" size="5278645" download="eager" />
   </resources>
   <jfx:javafx-desc  width="0" height="0" main-class="tech.bison.transportapp.TransportApp"  name="TransportApp" />
