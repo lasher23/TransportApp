@@ -109,7 +109,6 @@ public class SearchConnectionController {
     } catch (PublicTransportServiceUnvailableException e) {
       FXUtils.showErrorAlert("Fehler bei der Verbindun zum Server!",
           "Prüfen sie ihre Internetverbindung und versuchen sie es später nochmal.");
-      e.printStackTrace();
     }
   }
 
