@@ -51,7 +51,7 @@ public class AutoCompleteTextField extends TextField {
   }
 
   /**
-   * Get the existing set of autocomplete entries.
+   * Get the existing set of autocomplete entries. Add items to that List.
    * 
    * @return The existing autocomplete entries.
    */

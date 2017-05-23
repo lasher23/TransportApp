@@ -6,6 +6,7 @@ import java.net.URLConnection;
 import java.util.Comparator;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import tech.bison.transport.Coordinate;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
@@ -51,6 +54,7 @@ public class StationSearchController {
     columnName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
     columnDistance
         .setCellValueFactory(param -> new SimpleStringProperty(String.valueOf(param.getValue().getDistance())));
+    Platform.runLater(txtStation::requestFocus);
   }
 
   @FXML
@@ -117,5 +121,12 @@ public class StationSearchController {
       }
       return 0;
     };
+  }
+
+  @FXML
+  private void keyPressed(KeyEvent event) {
+    if (event.getCode() == KeyCode.ENTER) {
+      onSearch();
+    }
   }
 }

@@ -17,7 +17,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.bison.transportapp.view.searchconnections.SearchConnectionController">
    <children>
-      <VBox prefHeight="218.0" prefWidth="603.0">
+      <VBox prefHeight="218.0" prefWidth="603.0" onKeyPressed="#keyPressed">
          <children>
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="64.0" text="Orteingabe" VBox.vgrow="ALWAYS">
                <VBox.margin>

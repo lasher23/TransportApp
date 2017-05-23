@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import tech.bison.transport.Connection;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
 import tech.bison.transport.Section;
@@ -79,6 +82,8 @@ public class SearchConnectionController {
         cellData -> new SimpleStringProperty(getFromattedDate(cellData.getValue().getTo().getArrival())));
 
     tableView.setItems(connections);
+
+    Platform.runLater(txtStart::requestFocus);
   }
 
   @FXML
@@ -146,6 +151,13 @@ public class SearchConnectionController {
       }
     } catch (PublicTransportServiceUnvailableException e) {
       // Not refresh when api is done or just don't start to show
+    }
+  }
+
+  @FXML
+  private void keyPressed(KeyEvent event) {
+    if (event.getCode() == KeyCode.ENTER) {
+      onSearchClick();
     }
   }
 }

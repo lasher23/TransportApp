@@ -21,6 +21,8 @@ public class TransportApp extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.getIcons().add(new Image("ressources/train.png"));
+    primaryStage.getIcons().add(new Image("ressources/trainBig.png"));
+    primaryStage.setResizable(false);
     initRootLayout();
     primaryStage.setScene(new Scene(controller.getRootPane()));
     primaryStage.show();

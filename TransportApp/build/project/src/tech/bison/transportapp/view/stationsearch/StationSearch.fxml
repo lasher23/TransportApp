@@ -12,7 +12,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.bison.transportapp.view.stationsearch.StationSearchController">
    <children>
-      <GridPane>
+      <GridPane onKeyPressed="#keyPressed">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="144.0" />
           <ColumnConstraints hgrow="ALWAYS" maxWidth="793.0" minWidth="10.0" prefWidth="225.0" />

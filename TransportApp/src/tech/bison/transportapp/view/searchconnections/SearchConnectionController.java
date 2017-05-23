@@ -19,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import tech.bison.transport.Connection;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
 import tech.bison.transport.Section;
@@ -149,6 +151,13 @@ public class SearchConnectionController {
       }
     } catch (PublicTransportServiceUnvailableException e) {
       // Not refresh when api is done or just don't start to show
+    }
+  }
+
+  @FXML
+  private void keyPressed(KeyEvent event) {
+    if (event.getCode() == KeyCode.ENTER) {
+      onSearchClick();
     }
   }
 }

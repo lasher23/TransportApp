@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import tech.bison.transport.PublicTransportServiceUnvailableException;
 import tech.bison.transport.Station;
 import tech.bison.transport.StationBoard;
@@ -58,7 +60,7 @@ public class TableBoardController {
     }
   }
 
-  public Comparator<Station> getComparator() {
+  private Comparator<Station> getComparator() {
     return (o1, o2) -> {
       if (o1.getScore() > o2.getScore()) {
         return 1;
@@ -97,6 +99,13 @@ public class TableBoardController {
 
         stationBoardEntries.add(stationBoard);
       }
+    }
+  }
+
+  @FXML
+  private void keyPressed(KeyEvent event) {
+    if (event.getCode() == KeyCode.ENTER) {
+      onSearchClick();
     }
   }
 }
