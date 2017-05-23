@@ -75,6 +75,7 @@ public class TableBoardController {
 
   @FXML
   private void onSearchClick() {
+
     List<Station> stations;
     try {
       stations = transport.getStations(txtStationName.getText()).getStations();
